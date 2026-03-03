@@ -29,7 +29,7 @@ namespace Bazaar.Shared.Infrastructure.Auth
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["ServiceJwt:Secret"]!))
+                            Encoding.UTF8.GetBytes(configuration["ServiceJwt:Key"]!))
                     };
                 });
             services.AddAuthorization(options =>
