@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\SignIn\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Infrastructure\Bazaar.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Bazaar.Customers.Service.DataAccess\Bazaar.Customers.Service.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
