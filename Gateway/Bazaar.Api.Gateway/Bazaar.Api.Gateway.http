@@ -1,0 +1,6 @@
+@Bazaar.Api.Gateway_HostAddress = http://localhost:5011
+
+GET {{Bazaar.Api.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
