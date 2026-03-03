@@ -12,6 +12,7 @@
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
+        public string Role { get; set; } = "Customer";
 
         public static Customer Create(
             string name, 
@@ -35,7 +36,8 @@
                 Address = address,
                 City = city,
                 PostalCode = postalCode,
-                Country = country
+                Country = country,
+                Role = "Customer"
             };
         }
     }
