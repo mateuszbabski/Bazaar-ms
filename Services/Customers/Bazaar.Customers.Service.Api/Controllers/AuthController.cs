@@ -8,12 +8,12 @@ namespace Bazaar.Customers.Service.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthControllers : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly SignUpCommandHandler _signUpCommandHandler;
         private readonly SignInCommandHandler _signInCommandHandler;
 
-        public AuthControllers(SignUpCommandHandler signUpCommandHandler, SignInCommandHandler signInCommandHandler)
+        public AuthController(SignUpCommandHandler signUpCommandHandler, SignInCommandHandler signInCommandHandler)
         {
             _signUpCommandHandler = signUpCommandHandler;
             _signInCommandHandler = signInCommandHandler;

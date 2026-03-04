@@ -8,7 +8,7 @@ namespace Bazaar.Customers.Service.DataAccess
 {
     public static class ServiceRegistry
     {
-        public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<CustomersDbContext>(options =>            
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));

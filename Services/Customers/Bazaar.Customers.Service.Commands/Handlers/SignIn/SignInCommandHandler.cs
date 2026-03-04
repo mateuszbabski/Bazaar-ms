@@ -6,12 +6,12 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignIn
     public class SignInCommandHandler
     {
         private readonly ICustomerRepository _customerRepository;
-        private readonly ITokenManager _tokenManager;
+        private readonly IUserTokenManager _tokenManager;
         private readonly IPasswordHasher _passwordHasher;
 
         public SignInCommandHandler(
             ICustomerRepository customerRepository, 
-            ITokenManager tokenManager, 
+            IUserTokenManager tokenManager, 
             IPasswordHasher passwordHasher)
         {
             _customerRepository = customerRepository;

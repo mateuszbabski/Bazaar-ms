@@ -1,6 +1,8 @@
 using Bazaar.Shared.Infrastructure;
 using Bazaar.Shared.Infrastructure.Auth;
 using Bazaar.Customers.Service.Commands;
+using Bazaar.Customers.Service.DataAccess;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.RegisterSharedServices(builder.Configuration);
 builder.Services.RegisterAuthServices(builder.Configuration);
+builder.Services.RegisterDataAccessServices(builder.Configuration);
 builder.Services.RegisterCommandServices();
 
 var app = builder.Build();
@@ -20,6 +23,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

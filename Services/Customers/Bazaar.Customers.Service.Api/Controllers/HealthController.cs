@@ -7,7 +7,7 @@ namespace Bazaar.Customers.Service.Api.Controllers
     [Route("api/customers")]
     public class HealthController : ControllerBase
     {
-        [HttpGet("/health")]
+        [HttpGet("health")]
         [AllowAnonymous]
         public IActionResult Health() => Ok();
     }
