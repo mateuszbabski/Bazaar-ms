@@ -18,25 +18,21 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<SignUpResponse> Handle(SignUpCommand command)
+        public async Task<SignUpResult> Handle(SignUpCommand command)
         {
             var existingCustomer = await _customerRepository.Get(command.Email);
             if (existingCustomer is not null)
             {
-                return new SignUpResponse
-                {
-                    ErrorMessage = "Email is already registered."
-                };
+                return SignUpResult.Failure("Email is already registered.", ErrorCode.EmailAlreadyRegistered);
             }
             
             var validator = new SignUpValidator();
             var validationResult = await validator.ValidateAsync(command);
             if (!validationResult.IsValid)
             {
-                return new SignUpResponse
-                {
-                    ErrorMessage = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage))
-                };
+                return SignUpResult.Failure(
+                    string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)), 
+                    ErrorCode.ValidationFailed);
             }
 
             var hashedPassword = _passwordHasher.GenerateHashPassword(command.Password);
@@ -53,10 +49,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
 
             await _customerRepository.Add(customer);
             
-            return new SignUpResponse
-            {
-                Message = "Customer registered successfully."
-            };
+            return SignUpResult.Success("Customer registered successfully.");
         }
     }
 }

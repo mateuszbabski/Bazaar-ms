@@ -40,5 +40,30 @@
                 Role = "Customer"
             };
         }
+
+        public void Update(
+            string? name,
+            string? lastName,
+            string? phone,
+            string? address,
+            string? city,
+            string? postalCode, 
+            string? country)
+        {
+            if (!string.IsNullOrEmpty(name))
+                Name = name;
+            if (!string.IsNullOrEmpty(lastName))
+                LastName = lastName;
+            if (!string.IsNullOrEmpty(phone))
+                Phone = phone;
+            if (!string.IsNullOrEmpty(address))
+                Address = address;
+            if (!string.IsNullOrEmpty(city))
+                City = city;
+            if (!string.IsNullOrEmpty(postalCode))
+                PostalCode = postalCode;
+            if (!string.IsNullOrEmpty(country))
+                Country = country;
+        }
     }
 }

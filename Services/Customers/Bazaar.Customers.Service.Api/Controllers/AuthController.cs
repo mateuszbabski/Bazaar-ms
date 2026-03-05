@@ -20,7 +20,7 @@ namespace Bazaar.Customers.Service.Api.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<ActionResult<SignUpResponse>> SignUp([FromBody] SignUpCommand command)
+        public async Task<ActionResult<SignUpResult>> SignUp([FromBody] SignUpCommand command)
         {
             var result = await _signUpCommandHandler.Handle(command);
 

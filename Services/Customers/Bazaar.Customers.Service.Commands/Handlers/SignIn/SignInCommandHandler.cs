@@ -24,22 +24,12 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignIn
             var customer = await _customerRepository.Get(command.Email);
             if (customer == null || !_passwordHasher.ValidatePassword(command.Password, customer.PasswordHash))
             {
-                return new AuthenticationResult
-                {
-                    Id = Guid.Empty,
-                    Token = string.Empty,
-                    Status = "Failure",
-                    Message = "Invalid email or password."
-                };
+                return AuthenticationResult.Failure("Invalid email or password.");
             }
 
             var token = _tokenManager.GenerateToken(customer.Id, customer.Email, customer.Role);
-            return new AuthenticationResult
-            {
-                Token = token,
-                Id = customer.Id,
-                Status = "Success"
-            };
+
+            return AuthenticationResult.Success(customer.Id, token);            
         }
     }
 }
