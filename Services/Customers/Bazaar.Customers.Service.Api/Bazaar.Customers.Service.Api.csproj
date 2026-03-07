@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Infrastructure\Bazaar.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Bazaar.Customers.Service.Commands\Bazaar.Customers.Service.Commands.csproj" />
+    <ProjectReference Include="..\Bazaar.Customers.Service.Queries\Bazaar.Customers.Service.Queries.csproj" />
   </ItemGroup>
 
 </Project>

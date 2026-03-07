@@ -1,4 +1,6 @@
-﻿namespace Bazaar.Customers.Service.Commands.Responses
+﻿using Bazaar.Customers.Service.Domain.ErrorCodes;
+
+namespace Bazaar.Customers.Service.Commands.Responses
 {
     public class SignUpResult
     {

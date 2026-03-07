@@ -21,7 +21,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignIn
 
         public async Task<AuthenticationResult> Handle(SignInCommand command)
         {
-            var customer = await _customerRepository.Get(command.Email);
+            var customer = await _customerRepository.GetByEmail(command.Email);
             if (customer == null || !_passwordHasher.ValidatePassword(command.Password, customer.PasswordHash))
             {
                 return AuthenticationResult.Failure("Invalid email or password.");

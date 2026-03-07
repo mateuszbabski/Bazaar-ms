@@ -30,7 +30,7 @@ namespace Bazaar.Customers.Service.DataAccess.Repository
         public async Task<Customer> Get(Guid id) 
             => await _context.Customers.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<Customer> Get(string email) 
+        public async Task<Customer> GetByEmail(string email) 
             => await _context.Customers.FirstOrDefaultAsync(x => x.Email == email);
 
         public async Task Update(Customer customer)

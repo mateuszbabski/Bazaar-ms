@@ -1,6 +1,7 @@
 using Bazaar.Shared.Infrastructure;
 using Bazaar.Shared.Infrastructure.Auth;
 using Bazaar.Customers.Service.Commands;
+using Bazaar.Customers.Service.Queries;
 using Bazaar.Customers.Service.DataAccess;
 using Scalar.AspNetCore;
 
@@ -16,6 +17,7 @@ builder.Services.RegisterSharedServices(builder.Configuration);
 builder.Services.RegisterAuthServices(builder.Configuration);
 builder.Services.RegisterDataAccessServices(builder.Configuration);
 builder.Services.RegisterCommandServices();
+builder.Services.RegisterQueryServices();
 
 var app = builder.Build();
 

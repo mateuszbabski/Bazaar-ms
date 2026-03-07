@@ -1,5 +1,6 @@
 ﻿using Bazaar.Customers.Service.Commands.Responses;
 using Bazaar.Customers.Service.DataAccess.Repository;
+using Bazaar.Customers.Service.Domain.ErrorCodes;
 using Bazaar.Customers.Service.Domain.Models;
 using Bazaar.Shared.Infrastructure.Auth;
 
@@ -20,7 +21,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
 
         public async Task<SignUpResult> Handle(SignUpCommand command)
         {
-            var existingCustomer = await _customerRepository.Get(command.Email);
+            var existingCustomer = await _customerRepository.GetByEmail(command.Email);
             if (existingCustomer is not null)
             {
                 return SignUpResult.Failure("Email is already registered.", ErrorCode.EmailAlreadyRegistered);

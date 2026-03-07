@@ -1,3 +1,7 @@
+using Bazaar.Api.Gateway.Clients;
+using Bazaar.Shared.Infrastructure;
+using Bazaar.Shared.Infrastructure.Auth;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.RegisterSharedServices(builder.Configuration);
+builder.Services.RegisterGatewayAuth(builder.Configuration);
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CustomersServiceClient>();
 
 var app = builder.Build();
 
@@ -16,6 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,5 +1,6 @@
 ﻿using Bazaar.Customers.Service.Commands.Responses;
 using Bazaar.Customers.Service.DataAccess.Repository;
+using Bazaar.Customers.Service.Domain.ErrorCodes;
 
 namespace Bazaar.Customers.Service.Commands.Handlers.Update
 {

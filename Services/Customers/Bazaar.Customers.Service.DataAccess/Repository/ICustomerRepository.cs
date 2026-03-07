@@ -8,6 +8,6 @@ namespace Bazaar.Customers.Service.DataAccess.Repository
         Task Update(Customer customer);
         Task Delete(Guid id);
         Task<Customer> Get(Guid id);
-        Task<Customer> Get(string email);
+        Task<Customer> GetByEmail(string email);
     }
 }
