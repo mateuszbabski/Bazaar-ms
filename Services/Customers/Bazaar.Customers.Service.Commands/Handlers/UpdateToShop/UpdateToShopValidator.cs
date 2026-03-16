@@ -1,5 +1,4 @@
-﻿using Bazaar.Customers.Service.Commands.Handlers.Update;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Bazaar.Customers.Service.Commands.Handlers.UpdateToShop
 {

@@ -15,7 +15,7 @@ namespace Bazaar.Customers.Service.Domain.Models
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public string? ShopName { get; set; } = "";
-        public Roles Role { get; set; } = Roles.Customer;
+        public Role Role { get; set; } = Role.Customer;
 
         public static Customer Create(
             string name, 
@@ -27,7 +27,7 @@ namespace Bazaar.Customers.Service.Domain.Models
             string city, 
             string postalCode, 
             string country,
-            Roles role,
+            Role role,
             string? shopName)
         {
             return new Customer
@@ -75,7 +75,7 @@ namespace Bazaar.Customers.Service.Domain.Models
         public void UpdateToShop(string shopName)
         {
             ShopName = shopName;
-            Role = Roles.Shop;
+            Role = Role.Shop;
         }
     }
 }

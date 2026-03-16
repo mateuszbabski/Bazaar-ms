@@ -14,6 +14,13 @@
     <Project Path="Services/Customers/Bazaar.Customers.Service.Domain/Bazaar.Customers.Service.Domain.csproj" />
     <Project Path="Services/Customers/Bazaar.Customers.Service.Queries/Bazaar.Customers.Service.Queries.csproj" />
   </Folder>
+  <Folder Name="/Services/Products/">
+    <Project Path="Services/Products/Bazaar.Products.Service.Api/Bazaar.Products.Service.Api.csproj" Id="a69f60a4-620b-4353-9a2b-5e20e7bbef87" />
+    <Project Path="Services/Products/Bazaar.Products.Service.Commands/Bazaar.Products.Service.Commands.csproj" Id="6c0d5c3d-0eb7-4e84-9a58-e0a5a1ae707d" />
+    <Project Path="Services/Products/Bazaar.Products.Service.DataAccess/Bazaar.Products.Service.DataAccess.csproj" Id="89646f82-9e62-4a3e-9ae1-39b786ab16fe" />
+    <Project Path="Services/Products/Bazaar.Products.Service.Domain/Bazaar.Products.Service.Domain.csproj" Id="2def3383-8149-480d-834a-d524ead898f1" />
+    <Project Path="Services/Products/Bazaar.Products.Service.Queries/Bazaar.Products.Service.Queries.csproj" Id="a14a42ea-d651-489f-ac0a-a90fb28724c8" />
+  </Folder>
   <Folder Name="/Shared/">
     <Project Path="Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj" />
     <Project Path="Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj" Id="5353714d-f1bf-44bb-94b4-4a28922a7f54" />

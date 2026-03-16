@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Shops/Bazaar.Shops.Service.Api/Bazaar.Shops.Service.Api.csproj", "Services/Shops/Bazaar.Shops.Service.Api/"]
-RUN dotnet restore "./Services/Shops/Bazaar.Shops.Service.Api/Bazaar.Shops.Service.Api.csproj"
+COPY ["Services/Products/Bazaar.Products.Service.Api/Bazaar.Products.Service.Api.csproj", "Services/Products/Bazaar.Products.Service.Api/"]
+RUN dotnet restore "./Services/Products/Bazaar.Products.Service.Api/Bazaar.Products.Service.Api.csproj"
 COPY . .
-WORKDIR "/src/Services/Shops/Bazaar.Shops.Service.Api"
-RUN dotnet build "./Bazaar.Shops.Service.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Products/Bazaar.Products.Service.Api"
+RUN dotnet build "./Bazaar.Products.Service.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Ten etap służy do publikowania projektu usługi do skopiowania do etapu końcowego
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Bazaar.Shops.Service.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Bazaar.Products.Service.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Ten etap jest używany w środowisku produkcyjnym lub w przypadku uruchamiania z programu VS w trybie regularnym (domyślnie, gdy nie jest używana konfiguracja debugowania)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Bazaar.Shops.Service.Api.dll"]
+ENTRYPOINT ["dotnet", "Bazaar.Products.Service.Api.dll"]

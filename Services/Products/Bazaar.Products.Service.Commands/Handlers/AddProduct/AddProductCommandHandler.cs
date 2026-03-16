@@ -1,0 +1,20 @@
+﻿using Bazaar.Products.Service.Commands.Responses;
+using Bazaar.Products.Service.DataAccess.Repository;
+
+namespace Bazaar.Products.Service.Commands.Handlers.AddProduct
+{
+    public class AddProductCommandHandler
+    {
+        private readonly IProductRepository _productRepository;
+
+        public AddProductCommandHandler(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
+        public async Task<AddProductCommandResult> Handle(AddProductCommand command)
+        {
+            
+        }
+    }
+}

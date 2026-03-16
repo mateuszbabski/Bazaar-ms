@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="Bazaar.Products.Service.Api.csproj" />
+  <Project Path="../Bazaar.Products.Service.Commands/Bazaar.Products.Service.Commands.csproj" />
+  <Project Path="../Bazaar.Products.Service.DataAccess/Bazaar.Products.Service.DataAccess.csproj" />
+  <Project Path="../Bazaar.Products.Service.Domain/Bazaar.Products.Service.Domain.csproj" />
+  <Project Path="../Bazaar.Products.Service.Queries/Bazaar.Products.Service.Queries.csproj" />
+  <Project Path="../../../Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj" />
+  <Project Path="../../../Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj" />
+</Solution>
+

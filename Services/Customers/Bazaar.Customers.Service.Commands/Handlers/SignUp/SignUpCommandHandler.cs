@@ -42,7 +42,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
                 return SignUpResult.Failure("Invalid role specified. Allowed roles are 'Customer' and 'Shop'.", ErrorCode.ValidationFailed);
             }
 
-            var role = Enum.Parse<Roles>(command.Role);
+            var role = Enum.Parse<Role>(command.Role, ignoreCase: true);
             var hashedPassword = _passwordHasher.GenerateHashPassword(command.Password);
 
             var customer = Customer.Create(
@@ -65,7 +65,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
 
         private static bool IsRoleValid(string role)
         {
-            var validRoles = new Roles[] { Roles.Customer, Roles.Shop };
+            var validRoles = new Role[] { Role.Customer, Role.Shop };
             if (!validRoles.Any(r => r.ToString().Equals(role, StringComparison.OrdinalIgnoreCase)))
             {
                 return false;

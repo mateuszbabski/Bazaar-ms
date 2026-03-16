@@ -1,3 +1,9 @@
 <Solution>
   <Project Path="Bazaar.Customers.Service.Api.csproj" />
+  <Project Path="../Bazaar.Customers.Service.Commands/Bazaar.Customers.Service.Commands.csproj" />
+  <Project Path="../Bazaar.Customers.Service.DataAccess/Bazaar.Customers.Service.DataAccess.csproj" />
+  <Project Path="../Bazaar.Customers.Service.Domain/Bazaar.Customers.Service.Domain.csproj" />
+  <Project Path="../Bazaar.Customers.Service.Queries/Bazaar.Customers.Service.Queries.csproj" />
+  <Project Path="../../../Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj" />
+  <Project Path="../../../Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj" />
 </Solution>

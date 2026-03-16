@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bazaar.Customers.Service.DataAccess.Repository
 {
-    internal class CustomerRepository : ICustomerRepository
+    internal sealed class CustomerRepository : ICustomerRepository
     {
         private readonly CustomersDbContext _context;
 

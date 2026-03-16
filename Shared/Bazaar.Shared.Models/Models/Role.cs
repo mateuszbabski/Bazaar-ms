@@ -1,6 +1,6 @@
 ﻿namespace Bazaar.Shared.Models.Models
 {
-    public enum Roles
+    public enum Role
     {
         Admin,
         Moderator,
