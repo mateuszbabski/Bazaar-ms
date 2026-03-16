@@ -1,5 +1,6 @@
 ﻿using Bazaar.Products.Service.Commands.Responses;
 using Bazaar.Products.Service.DataAccess.Repository;
+using Bazaar.Products.Service.Domain.ErrorCodes;
 
 namespace Bazaar.Products.Service.Commands.Handlers.AddProduct
 {
@@ -14,7 +15,12 @@ namespace Bazaar.Products.Service.Commands.Handlers.AddProduct
 
         public async Task<AddProductCommandResult> Handle(AddProductCommand command)
         {
-            
+            var validator = new AddProductCommandValidator();
+            var validationResult = validator.Validate(command);
+            if (!validationResult.IsValid)
+            {
+                return AddProductCommandResult.Failure("Validation failed.", ErrorCode.ValidationFailed);
+            }
         }
     }
 }
