@@ -4,7 +4,6 @@ using Bazaar.Customers.Service.Domain.ErrorCodes;
 using Bazaar.Customers.Service.Domain.Models;
 using Bazaar.Shared.Infrastructure.Auth;
 using Bazaar.Shared.Models.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
 {

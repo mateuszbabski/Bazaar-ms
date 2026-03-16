@@ -1,5 +1,4 @@
 ﻿using Bazaar.Shared.Models.Models;
-using System.Security.Principal;
 
 namespace Bazaar.Customers.Service.Domain.Models
 {
@@ -29,7 +28,7 @@ namespace Bazaar.Customers.Service.Domain.Models
             string postalCode, 
             string country,
             Roles role,
-            string shopName)
+            string? shopName)
         {
             return new Customer
             {

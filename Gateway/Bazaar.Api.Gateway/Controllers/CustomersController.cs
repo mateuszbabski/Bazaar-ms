@@ -17,6 +17,7 @@ namespace Bazaar.Api.Gateway.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetCustomer()
         {
             var response = await _serviceClient.GetCustomer();
@@ -24,6 +25,7 @@ namespace Bazaar.Api.Gateway.Controllers
         }
 
         [HttpPatch("me")]
+        [Authorize]
         public async Task<ActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest updateRequest)
         {
             var response = await _serviceClient.UpdateCustomer(updateRequest);
@@ -31,6 +33,7 @@ namespace Bazaar.Api.Gateway.Controllers
         }
 
         [HttpPatch("me/updatetoshop")]
+        [Authorize]
         public async Task<ActionResult> UpdateCustomerToShop([FromBody] UpdateCustomerToShopRequest updateRequest)
         {
             var response = await _serviceClient.UpdateCustomerToShop(updateRequest);

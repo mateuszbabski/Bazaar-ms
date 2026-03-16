@@ -21,6 +21,15 @@ namespace Bazaar.Customers.Service.Commands.Handlers.UpdateToShop
                 return UpdateCustomerResult.Failure("Customer not found.", ErrorCode.CustomerNotFound);
             }
 
+            var validator = new UpdateToShopValidator();
+            var validationResult = validator.Validate(command);
+            if (!validationResult.IsValid)
+            {
+                return UpdateCustomerResult.Failure(
+                    string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)),
+                    ErrorCode.ValidationFailed);
+            }
+
             customer.UpdateToShop(command.ShopName);
 
             await _customerRepository.Update(customer);

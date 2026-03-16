@@ -72,11 +72,11 @@ namespace Bazaar.Api.Gateway.Clients
 
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    _httpClient.DefaultRequestHeaders.Add("X-User-Id", userId);
+                    request.Headers.Add("X-User-Id", userId);
                 }
                 if (!string.IsNullOrEmpty(userRole))
                 {
-                    _httpClient.DefaultRequestHeaders.Add("X-User-Role", userRole);
+                    request.Headers.Add("X-User-Role", userRole);
                 }
             }
 

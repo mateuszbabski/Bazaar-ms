@@ -11,5 +11,7 @@
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
+        public string Role { get; set; }
+        public string? ShopName { get; set; }
     }
 }

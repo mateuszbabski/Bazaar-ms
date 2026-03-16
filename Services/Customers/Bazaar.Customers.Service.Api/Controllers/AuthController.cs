@@ -1,6 +1,7 @@
 ﻿using Bazaar.Customers.Service.Commands.Handlers.SignIn;
 using Bazaar.Customers.Service.Commands.Handlers.SignUp;
 using Bazaar.Customers.Service.Commands.Responses;
+using Bazaar.Customers.Service.Domain.ErrorCodes;
 using Bazaar.Shared.Infrastructure.Auth;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,15 +24,25 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<ActionResult<SignUpResult>> SignUp([FromBody] SignUpCommand command)
         {
             var result = await _signUpCommandHandler.Handle(command);
+            if (result.IsSuccess)
+                return Ok(result);
 
-            return Ok(result);
+            return result.ErrorCode switch
+            {
+                ErrorCode.EmailAlreadyRegistered => Conflict(result),
+                ErrorCode.ValidationFailed => BadRequest(result),
+                _ => StatusCode(500, result)
+            };
         }
 
         [HttpPost("signin")]
         public async Task<ActionResult<AuthenticationResult>> SignIn([FromBody] SignInCommand command)
         {
             var result = await _signInCommandHandler.Handle(command);
-            return Ok(result);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return Unauthorized(result);
         }
     }
 }
