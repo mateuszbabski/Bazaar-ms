@@ -1,4 +1,7 @@
-﻿namespace Bazaar.Customers.Service.Domain.Models
+﻿using Bazaar.Shared.Models.Models;
+using System.Security.Principal;
+
+namespace Bazaar.Customers.Service.Domain.Models
 {
     public class Customer
     {
@@ -12,7 +15,8 @@
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
-        public string Role { get; set; } = "Customer";
+        public string? ShopName { get; set; } = "";
+        public Roles Role { get; set; } = Roles.Customer;
 
         public static Customer Create(
             string name, 
@@ -23,7 +27,9 @@
             string address, 
             string city, 
             string postalCode, 
-            string country)
+            string country,
+            Roles role,
+            string shopName)
         {
             return new Customer
             {
@@ -37,7 +43,8 @@
                 City = city,
                 PostalCode = postalCode,
                 Country = country,
-                Role = "Customer"
+                Role = role,
+                ShopName = shopName,
             };
         }
 
@@ -64,6 +71,12 @@
                 PostalCode = postalCode;
             if (!string.IsNullOrEmpty(country))
                 Country = country;
+        }
+
+        public void UpdateToShop(string shopName)
+        {
+            ShopName = shopName;
+            Role = Roles.Shop;
         }
     }
 }

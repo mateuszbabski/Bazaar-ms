@@ -47,6 +47,12 @@ namespace Bazaar.Api.Gateway.Clients
             return await _httpClient.SendAsync(request);
         }
 
+        public async Task<HttpResponseMessage> UpdateCustomerToShop(UpdateCustomerToShopRequest requestObject)
+        {
+            var request = CreateRequest(HttpMethod.Patch, "api/customers/me/updatetoshop", requestObject, withUserContext: true);
+            return await _httpClient.SendAsync(request);
+        }
+
         private HttpRequestMessage CreateRequest(
             HttpMethod method, 
             string url, 

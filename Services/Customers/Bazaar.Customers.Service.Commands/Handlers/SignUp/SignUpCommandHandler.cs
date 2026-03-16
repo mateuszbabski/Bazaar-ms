@@ -3,6 +3,8 @@ using Bazaar.Customers.Service.DataAccess.Repository;
 using Bazaar.Customers.Service.Domain.ErrorCodes;
 using Bazaar.Customers.Service.Domain.Models;
 using Bazaar.Shared.Infrastructure.Auth;
+using Bazaar.Shared.Models.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
 {
@@ -36,7 +38,14 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
                     ErrorCode.ValidationFailed);
             }
 
+            if(!IsRoleValid(command.Role))
+            {
+                return SignUpResult.Failure("Invalid role specified. Allowed roles are 'Customer' and 'Shop'.", ErrorCode.ValidationFailed);
+            }
+
+            var role = Enum.Parse<Roles>(command.Role);
             var hashedPassword = _passwordHasher.GenerateHashPassword(command.Password);
+
             var customer = Customer.Create(
                 command.Name, 
                 command.LastName,
@@ -46,11 +55,24 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignUp
                 command.Address,
                 command.City,
                 command.PostalCode,
-                command.Country);
+                command.Country,
+                role,
+                command.ShopName);
 
             await _customerRepository.Add(customer);
             
             return SignUpResult.Success("Customer registered successfully.");
+        }
+
+        private static bool IsRoleValid(string role)
+        {
+            var validRoles = new Roles[] { Roles.Customer, Roles.Shop };
+            if (!validRoles.Any(r => r.ToString().Equals(role, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

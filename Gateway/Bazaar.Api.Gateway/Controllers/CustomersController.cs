@@ -30,6 +30,13 @@ namespace Bazaar.Api.Gateway.Controllers
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
+        [HttpPatch("me/updatetoshop")]
+        public async Task<ActionResult> UpdateCustomerToShop([FromBody] UpdateCustomerToShopRequest updateRequest)
+        {
+            var response = await _serviceClient.UpdateCustomerToShop(updateRequest);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
+
         [HttpPost("signup")]
         [AllowAnonymous]
         public async Task<ActionResult> SignUp([FromBody] SignUpCustomerRequest signUpRequest)

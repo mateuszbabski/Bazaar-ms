@@ -33,7 +33,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.Update
                 command.Phone, 
                 command.Address, 
                 command.City, 
-                command.PostalCode, 
+                command.PostalCode,
                 command.Country);
 
             await _customerRepository.Update(customer);
