@@ -1,26 +1,18 @@
 ﻿using Bazaar.Api.Gateway.Requests.Customers;
 using Bazaar.Shared.Infrastructure.Auth;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 
 namespace Bazaar.Api.Gateway.Clients
 {
-    public class CustomersServiceClient
+    public class CustomersServiceClient : BaseServiceClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly IServiceTokenManager _serviceTokenManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
         public CustomersServiceClient(
             IHttpClientFactory httpClientFactory,
             IServiceTokenManager serviceTokenManager,
             IHttpContextAccessor httpContextAccessor,
             IConfiguration configuration)
+            : base(httpClientFactory, serviceTokenManager, httpContextAccessor,
+                   configuration["Services:CustomersService"])
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(configuration["Services:CustomersService"]);
-            _serviceTokenManager = serviceTokenManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<HttpResponseMessage> SignUp(SignUpCustomerRequest requestObject)
@@ -51,39 +43,6 @@ namespace Bazaar.Api.Gateway.Clients
         {
             var request = CreateRequest(HttpMethod.Patch, "api/customers/me/updatetoshop", requestObject, withUserContext: true);
             return await _httpClient.SendAsync(request);
-        }
-
-        private HttpRequestMessage CreateRequest(
-            HttpMethod method, 
-            string url, 
-            object? content = null, 
-            bool withUserContext = false)
-        {
-            var request = new HttpRequestMessage(method, url);
-
-            var serviceToken = _serviceTokenManager.GenerateServiceToken();
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", serviceToken);
-
-            if (withUserContext)
-            {
-                var claims = _httpContextAccessor.HttpContext?.User;
-                var userId = claims?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                var userRole = claims?.FindFirst(ClaimTypes.Role)?.Value;
-
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    request.Headers.Add("X-User-Id", userId);
-                }
-                if (!string.IsNullOrEmpty(userRole))
-                {
-                    request.Headers.Add("X-User-Role", userRole);
-                }
-            }
-
-            if (content is not null)
-                request.Content = JsonContent.Create(content);
-
-            return request;
         }
     }
 }

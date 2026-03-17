@@ -3,6 +3,7 @@ using Bazaar.Customers.Service.Commands.Handlers.UpdateToShop;
 using Bazaar.Customers.Service.Domain.ErrorCodes;
 using Bazaar.Customers.Service.Queries.Handlers;
 using Bazaar.Customers.Service.Queries.Responses;
+using Bazaar.Shared.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazaar.Customers.Service.Api.Controllers
@@ -24,13 +25,13 @@ namespace Bazaar.Customers.Service.Api.Controllers
             _updateToShopHandler = updateToShopHandler;
             _getCustomerHandler = getCustomerHandler;
         }
-
+        //TODO: add get by id and fetch only if customer is a shop
         [HttpGet]
         public async Task<ActionResult<GetCustomerResult>> Get()
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"].ToString();
-            if (string.IsNullOrEmpty(userId) || userRole != "Customer")
+            var userRole = Request.Headers["X-User-Role"];
+            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
                 return Unauthorized("Unauthorized");
 
             var result = await _getCustomerHandler.Handle(userId);
@@ -48,8 +49,8 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateCustomerCommand command)
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"].ToString();
-            if (string.IsNullOrEmpty(userId) || userRole != "Customer")
+            var userRole = Request.Headers["X-User-Role"];
+            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
                 return Unauthorized("Unauthorized");
 
             command.Id = Guid.Parse(userId);
@@ -70,8 +71,8 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<IActionResult> UpdateToShop([FromBody] UpdateToShopCommand command)
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"].ToString();
-            if (string.IsNullOrEmpty(userId) || userRole != "Customer")
+            var userRole = Request.Headers["X-User-Role"];
+            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
                 return Unauthorized("Unauthorized");
 
             command.Id = Guid.Parse(userId);

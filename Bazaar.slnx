@@ -3,6 +3,9 @@
   <Folder Name="/Database/Customers/">
     <File Path="Database/Customers/001_init_customers.sql" />
   </Folder>
+  <Folder Name="/Database/Products/">
+    <File Path="001_init_products.sql" />
+  </Folder>
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />
   </Folder>
