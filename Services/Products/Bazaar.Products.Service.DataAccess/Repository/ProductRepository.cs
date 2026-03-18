@@ -74,7 +74,7 @@ namespace Bazaar.Products.Service.DataAccess.Repository
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(p => p.Name.Contains(name));
             if (!string.IsNullOrEmpty(category))
-                query = query.Where(p => p.Category == category);
+                query = query.Where(p => p.Category.Contains(category));
             if (minPrice.HasValue)
                 query = query.Where(p => p.Price >= minPrice.Value);
             if (maxPrice.HasValue)
@@ -86,6 +86,12 @@ namespace Bazaar.Products.Service.DataAccess.Repository
         public async Task Update(Product product)
         {
             _dbContext.Products.Update(product);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(Product product)
+        {
+            _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
         }
     }

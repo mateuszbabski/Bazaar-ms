@@ -39,6 +39,33 @@ namespace Bazaar.Api.Gateway.Clients
             return await _httpClient.SendAsync(request);
         }
 
+        public async Task<HttpResponseMessage> SearchProducts(SearchProductsRequest requestObject)
+        {
+            var queryParams = new List<string>();
+
+            if (!string.IsNullOrEmpty(requestObject.Name))
+                queryParams.Add($"name={Uri.EscapeDataString(requestObject.Name)}");
+            if (!string.IsNullOrEmpty(requestObject.Category))
+                queryParams.Add($"category={Uri.EscapeDataString(requestObject.Category)}");
+            if (requestObject.MinPrice.HasValue)
+                queryParams.Add($"minPrice={requestObject.MinPrice.Value}");
+            if (requestObject.MaxPrice.HasValue)
+                queryParams.Add($"maxPrice={requestObject.MaxPrice.Value}");
+
+            var url = queryParams.Count > 0
+                ? $"api/products/search?{string.Join("&", queryParams)}"
+                : "api/products";
+
+            var request = CreateRequest(HttpMethod.Get, url, withUserContext: false);
+            return await _httpClient.SendAsync(request);
+        }
+
+        public async Task<HttpResponseMessage> DeleteProduct(Guid productId)
+        {
+            var request = CreateRequest(HttpMethod.Delete, $"api/products/{productId}", withUserContext: true);
+            return await _httpClient.SendAsync(request);
+        }
+
         public async Task<HttpResponseMessage> UpdateProduct(UpdateProductRequest requestObject)
         {
             var request = CreateRequest(HttpMethod.Patch, "api/products", requestObject, withUserContext: true);

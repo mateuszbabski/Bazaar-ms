@@ -13,5 +13,6 @@ namespace Bazaar.Products.Service.DataAccess.Repository
         Task<IEnumerable<Product>> GetProductsByPriceRange(decimal? minPrice, decimal? maxPrice);
         Task<IEnumerable<Product>> SearchProducts(string? name, string? category, decimal? minPrice, decimal? maxPrice);
         Task Update(Product product);
+        Task Delete(Product product);
     }
 }

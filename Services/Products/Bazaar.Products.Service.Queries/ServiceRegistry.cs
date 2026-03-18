@@ -1,6 +1,7 @@
 ﻿using Bazaar.Products.Service.Queries.Handlers.GetAllProducts;
 using Bazaar.Products.Service.Queries.Handlers.GetProductById;
 using Bazaar.Products.Service.Queries.Handlers.GetProductsByShopId;
+using Bazaar.Products.Service.Queries.Handlers.SearchProducts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bazaar.Products.Service.Queries
@@ -12,6 +13,7 @@ namespace Bazaar.Products.Service.Queries
             services.AddScoped<GetAllProductsQueryHandler>();
             services.AddScoped<GetProductByIdQueryHandler>();
             services.AddScoped<GetProductsByShopIdQueryHandler>();
+            services.AddScoped<SearchProductsQueryHandler>();
 
             return services;
         }
