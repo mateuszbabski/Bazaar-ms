@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Infrastructure\Bazaar.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Models\Bazaar.Shared.Models.csproj" />
     <ProjectReference Include="..\Bazaar.Products.Service.Commands\Bazaar.Products.Service.Commands.csproj" />
     <ProjectReference Include="..\Bazaar.Products.Service.DataAccess\Bazaar.Products.Service.DataAccess.csproj" />
     <ProjectReference Include="..\Bazaar.Products.Service.Queries\Bazaar.Products.Service.Queries.csproj" />

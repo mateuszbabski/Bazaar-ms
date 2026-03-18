@@ -12,6 +12,13 @@ namespace Bazaar.Customers.Service.DataAccess.Context
         {          
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .Property(c => c.Role)
+                .HasConversion<string>();
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

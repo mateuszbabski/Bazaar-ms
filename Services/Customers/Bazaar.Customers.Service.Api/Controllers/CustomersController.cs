@@ -30,8 +30,10 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<ActionResult<GetCustomerResult>> Get()
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"];
-            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
+            var userRole = Request.Headers["X-User-Role"].ToString();
+            if (string.IsNullOrEmpty(userId) ||
+                (!userRole.Equals(nameof(Role.Customer), StringComparison.OrdinalIgnoreCase) 
+                    && !userRole.Equals(nameof(Role.Shop), StringComparison.OrdinalIgnoreCase)))
                 return Unauthorized("Unauthorized");
 
             var result = await _getCustomerHandler.Handle(userId);
@@ -49,8 +51,9 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateCustomerCommand command)
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"];
-            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
+            var userRole = Request.Headers["X-User-Role"].ToString();
+            if (string.IsNullOrEmpty(userId) ||
+                (!userRole.Equals(nameof(Role.Customer), StringComparison.OrdinalIgnoreCase) && !userRole.Equals(nameof(Role.Shop), StringComparison.OrdinalIgnoreCase)))
                 return Unauthorized("Unauthorized");
 
             command.Id = Guid.Parse(userId);
@@ -71,8 +74,9 @@ namespace Bazaar.Customers.Service.Api.Controllers
         public async Task<IActionResult> UpdateToShop([FromBody] UpdateToShopCommand command)
         {
             var userId = Request.Headers["X-User-Id"].ToString();
-            var userRole = Request.Headers["X-User-Role"];
-            if (string.IsNullOrEmpty(userId) || (userRole != Role.Customer || userRole != Role.Shop))
+            var userRole = Request.Headers["X-User-Role"].ToString();
+            if (string.IsNullOrEmpty(userId) ||
+                (!userRole.Equals(nameof(Role.Customer), StringComparison.OrdinalIgnoreCase) && !userRole.Equals(nameof(Role.Shop), StringComparison.OrdinalIgnoreCase)))
                 return Unauthorized("Unauthorized");
 
             command.Id = Guid.Parse(userId);

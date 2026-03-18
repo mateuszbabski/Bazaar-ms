@@ -6,6 +6,7 @@
         ValidationFailed,
         CustomerNotFound,
         ProductNotFound,
+        ProductsNotFound,
         CategoryNotFound,
         InvalidProductData,
         InvalidCurrency

@@ -27,7 +27,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.SignIn
                 return AuthenticationResult.Failure("Invalid email or password.");
             }
 
-            var token = _tokenManager.GenerateToken(customer.Id, customer.Email, customer.Role);
+            var token = _tokenManager.GenerateToken(customer.Id, customer.Email, customer.Role.ToString());
 
             return AuthenticationResult.Success(customer.Id, token);            
         }

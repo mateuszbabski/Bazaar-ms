@@ -15,6 +15,7 @@ builder.Services.RegisterGatewayAuth(builder.Configuration);
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CustomersServiceClient>();
+builder.Services.AddScoped<ProductsServiceClient>();
 
 var app = builder.Build();
 

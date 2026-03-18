@@ -20,5 +20,11 @@ namespace Bazaar.Api.Gateway.Clients
             var request = CreateRequest(HttpMethod.Post, "api/products", requestObject, withUserContext: true);
             return await _httpClient.SendAsync(request);
         }
+
+        public async Task<HttpResponseMessage> GetAllProducts()
+        {
+            var request = CreateRequest(HttpMethod.Get, "api/products", withUserContext: false);
+            return await _httpClient.SendAsync(request);
+        }
     }
 }

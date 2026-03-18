@@ -23,5 +23,13 @@ namespace Bazaar.Api.Gateway.Controllers
             var response = await _serviceClient.AddProduct(addProductRequest);
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetAllProducts()
+        {
+            var response = await _serviceClient.GetAllProducts();
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
     }
 }

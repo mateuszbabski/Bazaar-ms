@@ -16,6 +16,7 @@ namespace Bazaar.Products.Service.DataAccess.Repository
         public async Task<Product> Add(Product product)
         {
             await _dbContext.Products.AddAsync(product);
+            await _dbContext.SaveChangesAsync();
             return product;
         }
 

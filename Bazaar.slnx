@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Database/" />
   <Folder Name="/Database/Customers/">
+    <File Path="002_add_shopname_field.sql" />
     <File Path="Database/Customers/001_init_customers.sql" />
   </Folder>
   <Folder Name="/Database/Products/">

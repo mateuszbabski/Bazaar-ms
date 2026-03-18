@@ -11,6 +11,13 @@ namespace Bazaar.Products.Service.DataAccess.Context
         {            
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Currency)
+                .HasConversion<string>();
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
