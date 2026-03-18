@@ -32,6 +32,14 @@ namespace Bazaar.Api.Gateway.Controllers
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetProductById(Guid id)
+        {
+            var response = await _serviceClient.GetProductById(id);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        }
+
         [HttpPatch]
         [Authorize]
         public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest updateProductRequest)

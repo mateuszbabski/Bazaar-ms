@@ -3,6 +3,7 @@ using Bazaar.Products.Service.Commands.Handlers.UpdateProduct;
 using Bazaar.Products.Service.Commands.Responses;
 using Bazaar.Products.Service.Domain.ErrorCodes;
 using Bazaar.Products.Service.Queries.Handlers.GetAllProducts;
+using Bazaar.Products.Service.Queries.Handlers.GetProductById;
 using Bazaar.Products.Service.Queries.Responses;
 using Bazaar.Shared.Models.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,17 @@ namespace Bazaar.Products.Service.Api.Controllers
         private readonly AddProductCommandHandler _addProductCommandHandler;
         private readonly GetAllProductsQueryHandler _getAllProductsQueryHandler;
         private readonly UpdateProductCommandHandler _updateProductCommandHandler;
+        private readonly GetProductByIdQueryHandler _getProductByIdQueryHandler;
 
         public ProductsController(AddProductCommandHandler addProductCommandHandler,
             GetAllProductsQueryHandler getAllProductsQueryHandler,
-            UpdateProductCommandHandler updateProductCommandHandler)
+            UpdateProductCommandHandler updateProductCommandHandler,
+            GetProductByIdQueryHandler getProductByIdQueryHandler)
         {
             _addProductCommandHandler = addProductCommandHandler;
             _getAllProductsQueryHandler = getAllProductsQueryHandler;
             _updateProductCommandHandler = updateProductCommandHandler;
+            _getProductByIdQueryHandler = getProductByIdQueryHandler;
         }
 
         [HttpPost]
@@ -56,6 +60,19 @@ namespace Bazaar.Products.Service.Api.Controllers
             return result.ErrorCode switch
             {
                 ErrorCode.ProductsNotFound => NotFound(result),
+                _ => StatusCode(500, result)
+            };
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetProductByIdResult>> GetProductById(Guid id)
+        {
+            var result = await _getProductByIdQueryHandler.Handle(new GetProductByIdQuery { Id = id });
+            if (result.IsSuccess)
+                return Ok(result);
+            return result.ErrorCode switch
+            {
+                ErrorCode.ProductNotFound => NotFound(result),
                 _ => StatusCode(500, result)
             };
         }
