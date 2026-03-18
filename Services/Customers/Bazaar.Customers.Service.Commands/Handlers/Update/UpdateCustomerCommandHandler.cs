@@ -15,7 +15,7 @@ namespace Bazaar.Customers.Service.Commands.Handlers.Update
 
         public async Task<UpdateCustomerResult> Handle(UpdateCustomerCommand command)
         {
-            var customer = await _customerRepository.Get(command.Id.Value);
+            var customer = await _customerRepository.Get(command.Id);
             if (customer == null)
             {
                 return UpdateCustomerResult.Failure("Customer not found.", ErrorCode.CustomerNotFound);

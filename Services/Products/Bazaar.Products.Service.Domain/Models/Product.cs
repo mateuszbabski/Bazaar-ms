@@ -41,33 +41,52 @@ namespace Bazaar.Products.Service.Domain.Models
             };
         }
 
+        public void Update(
+            string? name, 
+            string? description, 
+            string? category, 
+            decimal? price, 
+            Currency? currency, 
+            string? unit, 
+            decimal? weightPerUnit, 
+            bool? isAvailable)
+        {
+            ChangeProductDetails(name, description, category, unit, weightPerUnit);
+            ChangeProductPrice(price, currency);
+            ChangeProductAvailability(isAvailable);
+        }
+
         public void ChangeProductDetails(
-            string name, 
-            string description, 
-            string unit, 
-            decimal weightPerUnit)
+            string? name, 
+            string? description,
+            string? category,
+            string? unit, 
+            decimal? weightPerUnit)
         {
             if (!string.IsNullOrEmpty(name))
                 Name = name;
             if (!string.IsNullOrEmpty(description))
                 Description = description;
+            if (!string.IsNullOrEmpty(category))
+                Category = category;
             if (!string.IsNullOrEmpty(unit))
                 Unit = unit;
-            if (weightPerUnit > 0)
-                WeightPerUnitInKg = weightPerUnit;
+            if (weightPerUnit.HasValue && weightPerUnit.Value > 0)
+                WeightPerUnitInKg = weightPerUnit.Value;
         }
 
-        public void ChangeProductPrice(decimal price, Currency currency)
+        public void ChangeProductPrice(decimal? price, Currency? currency)
         {
-            if (price > 0)
-                Price = price;
-            if (Enum.IsDefined(currency))
-                Currency = currency;
+            if (price.HasValue && price.Value > 0)
+                Price = price.Value;
+            if (currency.HasValue && Enum.IsDefined(currency.Value))
+                Currency = currency.Value;
         }
 
-        public void ChangeProductAvailability(bool isAvailable)
+        public void ChangeProductAvailability(bool? isAvailable)
         {
-            IsAvailable = isAvailable;
+            if (isAvailable.HasValue)
+                IsAvailable = isAvailable.Value;
         }
     }
 }

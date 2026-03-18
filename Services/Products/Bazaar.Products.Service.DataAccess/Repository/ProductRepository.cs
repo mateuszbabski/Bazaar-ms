@@ -64,9 +64,9 @@ namespace Bazaar.Products.Service.DataAccess.Repository
         }
 
         public async Task<IEnumerable<Product>> SearchProducts(
-            string? name, 
-            string? category, 
-            decimal? minPrice, 
+            string? name,
+            string? category,
+            decimal? minPrice,
             decimal? maxPrice)
         {
             var query = _dbContext.Products.AsQueryable();
@@ -81,6 +81,12 @@ namespace Bazaar.Products.Service.DataAccess.Repository
                 query = query.Where(p => p.Price <= maxPrice.Value);
 
             return await query.ToListAsync();
+        }
+
+        public async Task Update(Product product)
+        {
+            _dbContext.Products.Update(product);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

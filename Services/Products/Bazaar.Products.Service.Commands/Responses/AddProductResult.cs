@@ -1,26 +1,24 @@
 ﻿using Bazaar.Products.Service.Domain.ErrorCodes;
+using Bazaar.Shared.Models.Models;
 
 namespace Bazaar.Products.Service.Commands.Responses
 {
-    public class AddProductCommandResult
+    public class AddProductResult : Result
     {
-        public bool IsSuccess { get; set; }
-        public string? Message { get; set; }
-        public string? ErrorMessage { get; set; }
         public ErrorCode? ErrorCode { get; set; }
 
-        public static AddProductCommandResult Success(string message)
+        public static AddProductResult Success(string message)
         {
-            return new AddProductCommandResult
+            return new AddProductResult
             {
                 IsSuccess = true,
                 Message = message
             };
         }
 
-        public static AddProductCommandResult Failure(string errorMessage, ErrorCode errorCode)
+        public static AddProductResult Failure(string errorMessage, ErrorCode errorCode)
         {
-            return new AddProductCommandResult
+            return new AddProductResult
             {
                 IsSuccess = false,
                 ErrorMessage = errorMessage,

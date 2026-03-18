@@ -1,12 +1,10 @@
 ﻿using Bazaar.Customers.Service.Domain.ErrorCodes;
+using Bazaar.Shared.Models.Models;
 
 namespace Bazaar.Customers.Service.Commands.Responses
 {
-    public class SignUpResult
+    public class SignUpResult : Result
     {
-        public bool IsSuccess { get; set; }
-        public string? Message { get; set; }
-        public string? Error { get; set; }
         public ErrorCode? ErrorCode { get; set; }
 
         public static SignUpResult Success(string message)
@@ -23,7 +21,7 @@ namespace Bazaar.Customers.Service.Commands.Responses
             return new SignUpResult
             {
                 IsSuccess = false,
-                Error = errorMessage,
+                ErrorMessage = errorMessage,
                 ErrorCode = errorCode
             };
         }

@@ -1,8 +1,11 @@
-﻿namespace Bazaar.Customers.Service.Commands.Handlers.Update
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Bazaar.Customers.Service.Commands.Handlers.Update
 {
     public class UpdateCustomerCommand
     {
-        public Guid? Id { get; set; }
+        [Required]
+        public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? LastName { get; set; }
         public string? Phone { get; set; }

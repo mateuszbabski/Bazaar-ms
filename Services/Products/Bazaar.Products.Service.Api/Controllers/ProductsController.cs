@@ -1,4 +1,5 @@
 ﻿using Bazaar.Products.Service.Commands.Handlers.AddProduct;
+using Bazaar.Products.Service.Commands.Handlers.UpdateProduct;
 using Bazaar.Products.Service.Commands.Responses;
 using Bazaar.Products.Service.Domain.ErrorCodes;
 using Bazaar.Products.Service.Queries.Handlers.GetAllProducts;
@@ -14,16 +15,19 @@ namespace Bazaar.Products.Service.Api.Controllers
     {
         private readonly AddProductCommandHandler _addProductCommandHandler;
         private readonly GetAllProductsQueryHandler _getAllProductsQueryHandler;
+        private readonly UpdateProductCommandHandler _updateProductCommandHandler;
 
         public ProductsController(AddProductCommandHandler addProductCommandHandler,
-            GetAllProductsQueryHandler getAllProductsQueryHandler)
+            GetAllProductsQueryHandler getAllProductsQueryHandler,
+            UpdateProductCommandHandler updateProductCommandHandler)
         {
             _addProductCommandHandler = addProductCommandHandler;
             _getAllProductsQueryHandler = getAllProductsQueryHandler;
+            _updateProductCommandHandler = updateProductCommandHandler;
         }
 
         [HttpPost]
-        public async Task<ActionResult<AddProductCommandResult>> AddProduct([FromBody] AddProductCommand command)
+        public async Task<ActionResult<AddProductResult>> AddProduct([FromBody] AddProductCommand command)
         {
             var userId = Request.Headers["X-User-Id"].ToString();
             var userRole = Request.Headers["X-User-Role"].ToString();
@@ -52,6 +56,27 @@ namespace Bazaar.Products.Service.Api.Controllers
             return result.ErrorCode switch
             {
                 ErrorCode.ProductsNotFound => NotFound(result),
+                _ => StatusCode(500, result)
+            };
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult<UpdateProductResult>> UpdateProduct([FromBody] UpdateProductCommand command)
+        {
+            var userId = Request.Headers["X-User-Id"].ToString();
+            var userRole = Request.Headers["X-User-Role"].ToString();
+            if (string.IsNullOrEmpty(userId) || !userRole.Equals(nameof(Role.Shop), StringComparison.OrdinalIgnoreCase))
+                return Unauthorized("Unauthorized");
+
+            command.CustomerId = Guid.Parse(userId);
+            var result = await _updateProductCommandHandler.Handle(command);
+            if (result.IsSuccess)
+                return Ok(result);
+            return result.ErrorCode switch
+            {
+                ErrorCode.ProductNotFound => NotFound(result),
+                ErrorCode.Forbidden => StatusCode(403, result),
+                ErrorCode.ValidationFailed => BadRequest(result),
                 _ => StatusCode(500, result)
             };
         }

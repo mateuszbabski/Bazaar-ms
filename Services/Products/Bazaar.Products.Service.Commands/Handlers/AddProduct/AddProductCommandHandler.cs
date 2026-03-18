@@ -15,18 +15,18 @@ namespace Bazaar.Products.Service.Commands.Handlers.AddProduct
             _productRepository = productRepository;
         }
 
-        public async Task<AddProductCommandResult> Handle(AddProductCommand command)
+        public async Task<AddProductResult> Handle(AddProductCommand command)
         {
             var validator = new AddProductCommandValidator();
             var validationResult = validator.Validate(command);
             if (!validationResult.IsValid)
             {
-                return AddProductCommandResult.Failure("Validation failed.", ErrorCode.ValidationFailed);
+                return AddProductResult.Failure("Validation failed.", ErrorCode.ValidationFailed);
             }
 
             if (!Enum.TryParse<Currency>(command.Currency, ignoreCase: true, out var currency))
             {
-                return AddProductCommandResult.Failure("Invalid currency specified. Specified currency is not allowed.", ErrorCode.ValidationFailed);
+                return AddProductResult.Failure("Invalid currency specified. Specified currency is not allowed.", ErrorCode.ValidationFailed);
             }
 
             var product = Product.Create(
@@ -43,7 +43,7 @@ namespace Bazaar.Products.Service.Commands.Handlers.AddProduct
 
             await _productRepository.Add(product);
 
-            return AddProductCommandResult.Success("Product added successfully.");
+            return AddProductResult.Success("Product added successfully.");
         }            
     }
 }

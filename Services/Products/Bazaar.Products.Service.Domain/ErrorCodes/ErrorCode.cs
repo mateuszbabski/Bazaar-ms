@@ -9,6 +9,7 @@
         ProductsNotFound,
         CategoryNotFound,
         InvalidProductData,
-        InvalidCurrency
+        InvalidCurrency,
+        Forbidden
     }
 }
