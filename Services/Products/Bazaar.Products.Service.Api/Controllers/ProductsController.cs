@@ -4,6 +4,7 @@ using Bazaar.Products.Service.Commands.Responses;
 using Bazaar.Products.Service.Domain.ErrorCodes;
 using Bazaar.Products.Service.Queries.Handlers.GetAllProducts;
 using Bazaar.Products.Service.Queries.Handlers.GetProductById;
+using Bazaar.Products.Service.Queries.Handlers.GetProductsByShopId;
 using Bazaar.Products.Service.Queries.Responses;
 using Bazaar.Shared.Models.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,16 +19,20 @@ namespace Bazaar.Products.Service.Api.Controllers
         private readonly GetAllProductsQueryHandler _getAllProductsQueryHandler;
         private readonly UpdateProductCommandHandler _updateProductCommandHandler;
         private readonly GetProductByIdQueryHandler _getProductByIdQueryHandler;
+        private readonly GetProductsByShopIdQueryHandler _getProductsByShopIdQueryHandler;
 
-        public ProductsController(AddProductCommandHandler addProductCommandHandler,
+        public ProductsController(
+            AddProductCommandHandler addProductCommandHandler,
             GetAllProductsQueryHandler getAllProductsQueryHandler,
             UpdateProductCommandHandler updateProductCommandHandler,
-            GetProductByIdQueryHandler getProductByIdQueryHandler)
+            GetProductByIdQueryHandler getProductByIdQueryHandler,
+            GetProductsByShopIdQueryHandler getProductsByShopIdQueryHandler)
         {
             _addProductCommandHandler = addProductCommandHandler;
             _getAllProductsQueryHandler = getAllProductsQueryHandler;
             _updateProductCommandHandler = updateProductCommandHandler;
             _getProductByIdQueryHandler = getProductByIdQueryHandler;
+            _getProductsByShopIdQueryHandler = getProductsByShopIdQueryHandler;
         }
 
         [HttpPost]
@@ -73,6 +78,19 @@ namespace Bazaar.Products.Service.Api.Controllers
             return result.ErrorCode switch
             {
                 ErrorCode.ProductNotFound => NotFound(result),
+                _ => StatusCode(500, result)
+            };
+        }
+
+        [HttpGet("shop/{shopId}")]
+        public async Task<ActionResult<GetProductByIdResult>> GetProductByShopId(Guid shopId)
+        {
+            var result = await _getProductsByShopIdQueryHandler.Handle(new GetProductsByShopIdQuery { ShopId = shopId });
+            if (result.IsSuccess)
+                return Ok(result);
+            return result.ErrorCode switch
+            {
+                ErrorCode.ProductsNotFound => NotFound(result),
                 _ => StatusCode(500, result)
             };
         }

@@ -33,7 +33,7 @@ namespace Bazaar.Products.Service.DataAccess.Repository
         public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
         {
             return await _dbContext.Products
-                .Where(p => p.Category == category)
+                .Where(p => p.Category.Contains(category))
                 .ToListAsync();
         }
 
