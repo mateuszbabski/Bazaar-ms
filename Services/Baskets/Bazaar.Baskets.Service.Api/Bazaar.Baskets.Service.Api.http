@@ -1,0 +1,6 @@
+@Bazaar.Baskets.Service.Api_HostAddress = http://localhost:5044
+
+GET {{Bazaar.Baskets.Service.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

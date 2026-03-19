@@ -11,6 +11,13 @@
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />
   </Folder>
   <Folder Name="/Services/" />
+  <Folder Name="/Services/Baskets/">
+    <Project Path="Services/Baskets/Bazaar.Baskets.Service.Api/Bazaar.Baskets.Service.Api.csproj" Id="0f4cfdff-0f0c-4df7-961d-07d317e9b8b9" />
+    <Project Path="Services/Baskets/Bazaar.Baskets.Service.Commands/Bazaar.Baskets.Service.Commands.csproj" Id="4f9df872-03e8-44fb-8221-184cad0fb860" />
+    <Project Path="Services/Baskets/Bazaar.Baskets.Service.DataAccess/Bazaar.Baskets.Service.DataAccess.csproj" Id="5897debd-4b8e-4bca-9b26-76b22236ccb3" />
+    <Project Path="Services/Baskets/Bazaar.Baskets.Service.Domain/Bazaar.Baskets.Service.Domain.csproj" Id="f04e9eec-203c-4c67-9ee5-f92abe66f819" />
+    <Project Path="Services/Baskets/Bazaar.Baskets.Service.Queries/Bazaar.Baskets.Service.Queries.csproj" Id="39cb50c2-0680-4502-b05a-63ffedef214a" />
+  </Folder>
   <Folder Name="/Services/Customers/">
     <Project Path="Services/Customers/Bazaar.Customers.Service.Api/Bazaar.Customers.Service.Api.csproj" />
     <Project Path="Services/Customers/Bazaar.Customers.Service.Commands/Bazaar.Customers.Service.Commands.csproj" />
