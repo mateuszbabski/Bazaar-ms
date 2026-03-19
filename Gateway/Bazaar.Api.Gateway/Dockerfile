@@ -12,10 +12,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Bazaar.Api.Gateway.csproj", "."]
-RUN dotnet restore "./Bazaar.Api.Gateway.csproj"
+COPY ["Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj", "Gateway/Bazaar.Api.Gateway/"]
+COPY ["Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj", "Shared/Bazaar.Shared.Infrastructure/"]
+COPY ["Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj", "Shared/Bazaar.Shared.Models/"]
+RUN dotnet restore "./Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/Gateway/Bazaar.Api.Gateway"
 RUN dotnet build "./Bazaar.Api.Gateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Ten etap służy do publikowania projektu usługi do skopiowania do etapu końcowego

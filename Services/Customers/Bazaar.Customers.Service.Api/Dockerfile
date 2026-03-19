@@ -12,10 +12,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Bazaar.Customers.Service.Api.csproj", "."]
-RUN dotnet restore "./Bazaar.Customers.Service.Api.csproj"
+COPY ["Services/Customers/Bazaar.Customers.Service.Api/Bazaar.Customers.Service.Api.csproj", "Services/Customers/Bazaar.Customers.Service.Api/"]
+COPY ["Services/Customers/Bazaar.Customers.Service.Commands/Bazaar.Customers.Service.Commands.csproj", "Services/Customers/Bazaar.Customers.Service.Commands/"]
+COPY ["Services/Customers/Bazaar.Customers.Service.DataAccess/Bazaar.Customers.Service.DataAccess.csproj", "Services/Customers/Bazaar.Customers.Service.DataAccess/"]
+COPY ["Services/Customers/Bazaar.Customers.Service.Domain/Bazaar.Customers.Service.Domain.csproj", "Services/Customers/Bazaar.Customers.Service.Domain/"]
+COPY ["Services/Customers/Bazaar.Customers.Service.Queries/Bazaar.Customers.Service.Queries.csproj", "Services/Customers/Bazaar.Customers.Service.Queries/"]
+COPY ["Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj", "Shared/Bazaar.Shared.Infrastructure/"]
+COPY ["Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj", "Shared/Bazaar.Shared.Models/"]
+RUN dotnet restore "./Services/Customers/Bazaar.Customers.Service.Api/Bazaar.Customers.Service.Api.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/Services/Customers/Bazaar.Customers.Service.Api"
 RUN dotnet build "./Bazaar.Customers.Service.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Ten etap służy do publikowania projektu usługi do skopiowania do etapu końcowego

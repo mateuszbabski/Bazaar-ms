@@ -30,32 +30,6 @@ namespace Bazaar.Products.Service.DataAccess.Repository
             return await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
-        {
-            return await _dbContext.Products
-                .Where(p => p.Category.Contains(category))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByName(string name)
-        {
-            return await _dbContext.Products
-                .Where(p => p.Name.Contains(name))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByPriceRange(decimal? minPrice, decimal? maxPrice)
-        {
-            var query = _dbContext.Products.AsQueryable();
-
-            if (minPrice.HasValue)
-                query = query.Where(p => p.Price >= minPrice.Value);
-            if (maxPrice.HasValue)
-                query = query.Where(p => p.Price <= maxPrice.Value);
-
-            return await query.ToListAsync();
-        }
-
         public async Task<IEnumerable<Product>> GetProductsByShopId(Guid shopId)
         {
             return await _dbContext.Products
