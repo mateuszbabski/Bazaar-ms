@@ -24,14 +24,14 @@ namespace Bazaar.Baskets.Service.Domain.Models
             };
         }
 
-        public decimal CountTotalPrice()
+        public void CountTotalPrice()
         {
-            return Items.Sum(item => item.Price);
+            TotalPrice = Items.Sum(item => item.Price);
         }
 
-        public decimal CalculateTotalWeight()
+        public void CalculateTotalWeight()
         {
-            return Items.Sum(item => item.WeightInKg);
+            TotalWeightInKg = Items.Sum(item => item.WeightInKg);
         }
 
         public void ChangeBasketCurrency(decimal conversionRate, Currency newCurrency)

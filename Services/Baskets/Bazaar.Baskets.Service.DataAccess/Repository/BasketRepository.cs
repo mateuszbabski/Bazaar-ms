@@ -21,10 +21,17 @@ namespace Bazaar.Baskets.Service.DataAccess.Repository
             return basket;
         }
 
-        public void Delete(Basket basket)
+        public async Task Delete(Basket basket)
         {
             _dbContext.Baskets.Remove(basket);
+            await _dbContext.SaveChangesAsync();
         }
+
+        public async Task Update(Basket basket)
+        {
+            _dbContext.Baskets.Update(basket);
+            await _dbContext.SaveChangesAsync();
+        }   
 
         public async Task<Basket> GetByCustomerId(Guid customerId)
         {
