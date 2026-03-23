@@ -22,11 +22,13 @@ namespace Bazaar.Baskets.Service.Commands.Handlers.AddProductToBasket
 
         public async Task<AddProductToBasketResult> Handle(AddProductToBasketCommand command)
         {            
-            var product = await _productServiceClient.GetProductById(command.ProductId);
-            if (product == null)
+            var productResult = await _productServiceClient.GetProductById(command.ProductId);
+            if (!productResult.IsSuccess)
             {
-                return AddProductToBasketResult.Failure("Product not found", ErrorCode.ProductNotFound);
+                return AddProductToBasketResult.Failure(productResult.ErrorMessage!, ErrorCode.ProductNotFound);
             }
+
+            var product = productResult.Product!;
 
             var basket = await _basketRepository.GetByCustomerId(command.CustomerId);
             if (basket == null)

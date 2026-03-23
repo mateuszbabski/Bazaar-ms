@@ -29,19 +29,34 @@ namespace Bazaar.Baskets.Service.Commands.Clients
             _httpClient.BaseAddress = new Uri(baseAddress);
         }
 
-        public async Task<ProductDto?> GetProductById(Guid productId)
+        public async Task<ProductFetchResult> GetProductById(Guid productId)
         {
-            var request = CreateRequest(HttpMethod.Get, $"api/products/{productId}", withUserContext: false);
-            var response = await _httpClient.SendAsync(request);
+            HttpResponseMessage response;
+            try
+            {
+                var request = CreateRequest(HttpMethod.Get, $"api/products/{productId}", withUserContext: false);
+                response = await _httpClient.SendAsync(request);
+            }
+            catch (HttpRequestException)
+            {
+                return ProductFetchResult.ServiceUnavailable();
+            }
+            catch (TaskCanceledException)
+            {
+                return ProductFetchResult.ServiceUnavailable();
+            }
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                return ProductFetchResult.NotFound(productId);
 
             if (!response.IsSuccessStatusCode)
-                return null;
+                return ProductFetchResult.Error($"Products service returned {(int)response.StatusCode}.");
 
             var result = await response.Content.ReadFromJsonAsync<ProductServiceResponse>();
-            if (result is null || !result.IsSuccess || result.Product is null)
-                return null;
+            if (result?.Product is null)
+                return ProductFetchResult.Error("Failed to deserialize product response.");
 
-            return result.Product;
+            return ProductFetchResult.Success(result.Product);
         }
 
         protected HttpRequestMessage CreateRequest(
