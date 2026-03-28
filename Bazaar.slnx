@@ -49,4 +49,10 @@
     <Project Path="Shared/Bazaar.Shared.Infrastructure/Bazaar.Shared.Infrastructure.csproj" />
     <Project Path="Shared/Bazaar.Shared.Models/Bazaar.Shared.Models.csproj" Id="5353714d-f1bf-44bb-94b4-4a28922a7f54" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Bazaar.Baskets.Service.Tests/Bazaar.Baskets.Service.Tests.csproj" />
+    <Project Path="Tests/Bazaar.Customers.Service.Tests/Bazaar.Customers.Service.Tests.csproj" />
+    <Project Path="Tests/Bazaar.Orders.Service.Tests/Bazaar.Orders.Service.Tests.csproj" />
+    <Project Path="Tests/Bazaar.Products.Service.Tests/Bazaar.Products.Service.Tests.csproj" />
+  </Folder>
 </Solution>

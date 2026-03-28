@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\Baskets\Bazaar.Baskets.Service.Commands\Bazaar.Baskets.Service.Commands.csproj" />
+    <ProjectReference Include="..\..\Services\Baskets\Bazaar.Baskets.Service.Queries\Bazaar.Baskets.Service.Queries.csproj" />
+    <ProjectReference Include="..\..\Services\Baskets\Bazaar.Baskets.Service.Domain\Bazaar.Baskets.Service.Domain.csproj" />
+    <ProjectReference Include="..\..\Services\Baskets\Bazaar.Baskets.Service.DataAccess\Bazaar.Baskets.Service.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
