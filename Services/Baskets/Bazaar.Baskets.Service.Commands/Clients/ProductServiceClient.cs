@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Bazaar.Baskets.Service.Commands.Clients
 {
@@ -52,7 +54,13 @@ namespace Bazaar.Baskets.Service.Commands.Clients
             if (!response.IsSuccessStatusCode)
                 return ProductFetchResult.Error($"Products service returned {(int)response.StatusCode}.");
 
-            var result = await response.Content.ReadFromJsonAsync<ProductServiceResponse>();
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+
+            var result = await response.Content.ReadFromJsonAsync<ProductServiceResponse>(jsonOptions);
             if (result?.Product is null)
                 return ProductFetchResult.Error("Failed to deserialize product response.");
 

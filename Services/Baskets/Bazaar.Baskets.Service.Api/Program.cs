@@ -1,10 +1,27 @@
+using Bazaar.Baskets.Service.Commands;
+using Bazaar.Baskets.Service.DataAccess;
+using Bazaar.Baskets.Service.Queries;
+using Bazaar.Shared.Infrastructure;
+using Bazaar.Shared.Infrastructure.Auth;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.RegisterSharedServices(builder.Configuration);
+builder.Services.RegisterAuthServices(builder.Configuration);
+builder.Services.RegisterDataAccessServices(builder.Configuration);
+builder.Services.RegisterCommandServices();
+builder.Services.RegisterQueryServices();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -16,6 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

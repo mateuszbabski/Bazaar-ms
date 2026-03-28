@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Infrastructure\Bazaar.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Bazaar.Shared.Models\Bazaar.Shared.Models.csproj" />
+    <ProjectReference Include="..\Bazaar.Baskets.Service.Commands\Bazaar.Baskets.Service.Commands.csproj" />
+    <ProjectReference Include="..\Bazaar.Baskets.Service.DataAccess\Bazaar.Baskets.Service.DataAccess.csproj" />
+    <ProjectReference Include="..\Bazaar.Baskets.Service.Queries\Bazaar.Baskets.Service.Queries.csproj" />
   </ItemGroup>
 
 </Project>

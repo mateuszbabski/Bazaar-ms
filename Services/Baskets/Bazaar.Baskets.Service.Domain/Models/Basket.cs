@@ -41,8 +41,19 @@ namespace Bazaar.Baskets.Service.Domain.Models
                 item.ChangeCurrency(conversionRate, newCurrency);
             }
 
-            decimal convertedProductsPrice = Items.Sum(x => x.Price);
-            this.TotalPrice = convertedProductsPrice;
+            Currency = newCurrency;
+            TotalPrice = Items.Sum(x => x.Price);
+        }
+
+        public void RemoveItem(Guid basketItemId)
+        {
+            var item = Items.FirstOrDefault(i => i.Id == basketItemId);
+            if (item != null)
+            {
+                Items.Remove(item);
+                CountTotalPrice();
+                CalculateTotalWeight();
+            }
         }
     }
 }

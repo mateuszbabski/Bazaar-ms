@@ -16,6 +16,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CustomersServiceClient>();
 builder.Services.AddScoped<ProductsServiceClient>();
+builder.Services.AddScoped<BasketsServiceClient>();
 
 var app = builder.Build();
 

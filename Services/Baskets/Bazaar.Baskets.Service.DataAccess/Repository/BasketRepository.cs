@@ -29,9 +29,8 @@ namespace Bazaar.Baskets.Service.DataAccess.Repository
 
         public async Task Update(Basket basket)
         {
-            _dbContext.Baskets.Update(basket);
             await _dbContext.SaveChangesAsync();
-        }   
+        }
 
         public async Task<Basket> GetByCustomerId(Guid customerId)
         {
@@ -43,21 +42,6 @@ namespace Bazaar.Baskets.Service.DataAccess.Repository
         {
             return await _dbContext.Baskets.Include(x => x.Items)
                                            .FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task RemoveItem(Basket basket, Guid basketItemId)
-        {
-            var product = await _dbContext.BasketItems.FirstOrDefaultAsync(x => x.Id == basketItemId && x.BasketId == basket.Id);
-
-            if (product != null)
-            {
-                _dbContext.BasketItems.Remove(product);
-
-                if (basket.Items.Count == 0)
-                {
-                    _dbContext.Baskets.Remove(basket);
-                }
-            }
         }
     }
 }

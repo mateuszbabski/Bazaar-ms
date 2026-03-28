@@ -7,9 +7,10 @@
         CustomerNotFound,
         ProductNotFound,
         ProductsNotFound,
-        CategoryNotFound,
-        InvalidProductData,
-        InvalidCurrency,
+        BasketNotFound,
+        BasketItemNotFound,
+        CurrencyConversionFailed,
+        BasketEmpty,
         Forbidden
     }
 }

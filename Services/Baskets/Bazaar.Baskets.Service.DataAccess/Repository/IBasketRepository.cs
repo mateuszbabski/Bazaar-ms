@@ -7,7 +7,6 @@ namespace Bazaar.Baskets.Service.DataAccess.Repository
         Task<Basket> Add(Basket basket);
         Task<Basket> GetById(Guid id);
         Task<Basket> GetByCustomerId(Guid customerId);
-        Task RemoveItem(Basket basket, Guid basketItemId);
         Task Delete(Basket basket);
         Task Update(Basket basket);
     }

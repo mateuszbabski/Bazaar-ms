@@ -31,7 +31,6 @@ namespace Bazaar.Baskets.Service.Domain.Models
         {
             return new BasketItem
             {
-                Id = Guid.NewGuid(),
                 ProductId = productId,
                 ShopId = shopId,
                 BasketId = basketId,
@@ -64,16 +63,17 @@ namespace Bazaar.Baskets.Service.Domain.Models
             }
         }
 
-        public void ChangeBasketItemQuantity(int quantity, decimal price, Currency currency)
+        public void ChangeBasketItemQuantity(int quantity)
         {
             if (quantity <= 0)
             {
                 throw new ArgumentException("Quantity must be greater than zero.");
             }
 
-            this.WeightInKg = CalculateTotalWeight(this.WeightInKg / this.Quantity, quantity);
+            var weightPerUnit = this.WeightInKg / this.Quantity;
             this.Quantity = quantity;
-            this.Price = price * quantity;
+            this.Price = CalculateTotalPrice(this.BasePrice, quantity);
+            this.WeightInKg = CalculateTotalWeight(weightPerUnit, quantity);
         }
     }
 }
