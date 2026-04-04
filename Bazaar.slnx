@@ -13,6 +13,9 @@
   <Folder Name="/Database/Products/">
     <File Path="001_init_products.sql" />
   </Folder>
+  <Folder Name="/Elementy rozwiązania/">
+    <File Path=".env" />
+  </Folder>
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />
   </Folder>
@@ -33,9 +36,9 @@
   </Folder>
   <Folder Name="/Services/Orders/">
     <Project Path="Services/Orders/Bazaar.Orders.Service.Api/Bazaar.Orders.Service.Api.csproj" />
-	<Project Path="Services/Orders/Bazaar.Orders.Service.Commands/Bazaar.Orders.Service.Commands.csproj" />
-	<Project Path="Services/Orders/Bazaar.Orders.Service.DataAccess/Bazaar.Orders.Service.DataAccess.csproj" />
-	<Project Path="Services/Orders/Bazaar.Orders.Service.Domain/Bazaar.Orders.Service.Domain.csproj" />
+    <Project Path="Services/Orders/Bazaar.Orders.Service.Commands/Bazaar.Orders.Service.Commands.csproj" />
+    <Project Path="Services/Orders/Bazaar.Orders.Service.DataAccess/Bazaar.Orders.Service.DataAccess.csproj" />
+    <Project Path="Services/Orders/Bazaar.Orders.Service.Domain/Bazaar.Orders.Service.Domain.csproj" />
     <Project Path="Services/Orders/Bazaar.Orders.Service.Queries/Bazaar.Orders.Service.Queries.csproj" />
   </Folder>
   <Folder Name="/Services/Products/">

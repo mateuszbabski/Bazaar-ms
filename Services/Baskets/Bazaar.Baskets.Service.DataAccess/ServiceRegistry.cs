@@ -11,7 +11,7 @@ namespace Bazaar.Baskets.Service.DataAccess
         public static void RegisterDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<BasketsDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("BasketsDb")));
             services.AddScoped<IBasketRepository, BasketRepository>();
         }
     }

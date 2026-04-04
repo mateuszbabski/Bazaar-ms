@@ -11,7 +11,7 @@ namespace Bazaar.Orders.Service.DataAccess
         public static void RegisterDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OrdersDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("OrdersDb")));
             services.AddScoped<IOrderRepository, OrderRepository>();
         }
     }

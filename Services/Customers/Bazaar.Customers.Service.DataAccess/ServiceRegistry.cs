@@ -11,7 +11,7 @@ namespace Bazaar.Customers.Service.DataAccess
         public static void RegisterDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<CustomersDbContext>(options =>            
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("CustomersDb")));
             services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
     }
