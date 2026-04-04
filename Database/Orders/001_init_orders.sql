@@ -1,3 +1,12 @@
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Bazaar_Orders')
+BEGIN
+    CREATE DATABASE Bazaar_Orders;
+END
+GO
+
+USE Bazaar_Orders;
+GO
+
 IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Orders' AND schema_id = SCHEMA_ID('dbo'))
 BEGIN
     CREATE TABLE Orders

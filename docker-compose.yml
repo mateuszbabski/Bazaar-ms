@@ -1,0 +1,183 @@
+services:
+    customers_db:
+        image: mcr.microsoft.com/mssql/server:2025-latest
+        environment:
+            - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+            - ACCEPT_EULA=Y
+        ports:
+            - "5431:1433"
+        networks:
+            - project_network
+        volumes:
+            - customers_data:/var/opt/mssql
+            - ./Database/Customers:/scripts:ro
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
+
+    products_db:
+        image: mcr.microsoft.com/mssql/server:2025-latest
+        environment:
+            - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+            - ACCEPT_EULA=Y
+        ports:
+            - "5432:1433"
+        networks:
+            - project_network
+        volumes:
+            - products_data:/var/opt/mssql
+            - ./Database/Products:/scripts:ro
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
+
+    baskets_db:
+        image: mcr.microsoft.com/mssql/server:2025-latest
+        environment:
+            - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+            - ACCEPT_EULA=Y
+        ports:
+            - "5433:1433"
+        networks:
+            - project_network
+        volumes:
+            - baskets_data:/var/opt/mssql
+            - ./Database/Baskets:/scripts:ro
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
+
+    orders_db:
+        image: mcr.microsoft.com/mssql/server:2025-latest
+        environment:
+            - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+            - ACCEPT_EULA=Y
+        ports:
+            - "5434:1433"
+        networks:
+            - project_network
+        volumes:
+            - orders_data:/var/opt/mssql
+            - ./Database/Orders:/scripts:ro
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
+            interval: 10s
+            retries: 10
+            start_period: 30s
+            timeout: 5s
+
+    customers_api:
+        image: customers_api_image
+        build:
+            context: .
+            dockerfile: Services/Customers/Bazaar.Customers.Service.Api/Dockerfile
+        environment:
+            - ConnectionStrings__CustomersDb=Server=customers_db;Database=Bazaar_Customers;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True
+            - JwtSettings__Key=${JWT_KEY}
+            - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        ports:
+            - "5001:8080"
+        networks:
+            - project_network
+        depends_on:
+            customers_db:
+                condition: service_healthy
+
+    products_api:
+        image: products_api_image
+        build:
+            context: .
+            dockerfile: Services/Products/Bazaar.Products.Service.Api/Dockerfile
+        environment:
+            - ConnectionStrings__ProductsDb=Server=products_db;Database=Bazaar_Products;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True
+            - JwtSettings__Key=${JWT_KEY}
+            - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        ports:
+            - "5002:8080"
+        networks:
+            - project_network
+        depends_on:
+            products_db:
+                condition: service_healthy
+
+    baskets_api:
+        image: baskets_api_image
+        build:
+            context: .
+            dockerfile: Services/Baskets/Bazaar.Baskets.Service.Api/Dockerfile
+        environment:
+            - ConnectionStrings__BasketsDb=Server=baskets_db;Database=Bazaar_Baskets;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True
+            - Services__CustomersService=http://customers_api:8080
+            - Services__ProductsService=http://products_api:8080
+            - Services__OrdersService=http://orders_api:8080
+            - JwtSettings__Key=${JWT_KEY}
+            - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        ports:
+            - "5003:8080"
+        networks:
+            - project_network
+        depends_on:
+            baskets_db:
+                condition: service_healthy
+
+    orders_api:
+        image: orders_api_image
+        build:
+            context: .
+            dockerfile: Services/Orders/Bazaar.Orders.Service.Api/Dockerfile
+        environment:
+            - ConnectionStrings__OrdersDb=Server=orders_db;Database=Bazaar_Orders;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True
+            - JwtSettings__Key=${JWT_KEY}
+            - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        ports:
+            - "5004:8080"
+        networks:
+            - project_network
+        depends_on:
+            orders_db:
+                condition: service_healthy
+
+    api_gateway:
+        image: api_gateway_image
+        build:
+            context: .
+            dockerfile: Gateway/Bazaar.Api.Gateway/Dockerfile
+        environment:
+            - Services__CustomersService=http://customers_api:8080
+            - Services__ProductsService=http://products_api:8080
+            - Services__BasketsService=http://baskets_api:8080
+            - Services__OrdersService=http://orders_api:8080
+            - JwtSettings__Key=${JWT_KEY}
+            - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        ports:
+            - "5000:8080"
+        networks:
+            - project_network
+        depends_on:
+            - customers_api
+            - products_api
+            - baskets_api
+            - orders_api
+
+networks:
+    project_network:
+        driver: bridge
+
+volumes:
+    customers_data:
+    products_data:
+    baskets_data:
+    orders_data:

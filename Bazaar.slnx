@@ -4,7 +4,6 @@
     <File Path="001_init_baskets.sql" />
   </Folder>
   <Folder Name="/Database/Customers/">
-    <File Path="002_add_shopname_field.sql" />
     <File Path="Database/Customers/001_init_customers.sql" />
   </Folder>
   <Folder Name="/Database/Orders/">
@@ -15,6 +14,7 @@
   </Folder>
   <Folder Name="/Elementy rozwiązania/">
     <File Path=".env" />
+    <File Path="docker-compose.yml" />
   </Folder>
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />

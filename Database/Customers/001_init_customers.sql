@@ -1,3 +1,12 @@
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Bazaar_Customers')
+BEGIN
+    CREATE DATABASE Bazaar_Customers;
+END
+GO
+
+USE Bazaar_Customers;
+GO
+
 IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Customers' AND schema_id = SCHEMA_ID('dbo'))
 BEGIN
     CREATE TABLE Customers
@@ -12,6 +21,7 @@ BEGIN
         City            NVARCHAR(100)       NOT NULL,
         PostalCode      NVARCHAR(20)        NOT NULL,
         Country         NVARCHAR(100)       NOT NULL,
+        ShopName		NVARCHAR(255)       NULL,
         Role            NVARCHAR(50)        NOT NULL    DEFAULT 'Customer',
         CONSTRAINT PK_Customers PRIMARY KEY (Id),
         CONSTRAINT UQ_Customers_Email UNIQUE (Email)
