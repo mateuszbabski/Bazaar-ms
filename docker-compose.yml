@@ -80,7 +80,7 @@ services:
             timeout: 5s
 
     customers_api:
-        image: customers_api_image
+        image: matidocker990/bazaar-customers-api:latest
         build:
             context: .
             dockerfile: Services/Customers/Bazaar.Customers.Service.Api/Dockerfile
@@ -97,7 +97,7 @@ services:
                 condition: service_healthy
 
     products_api:
-        image: products_api_image
+        image: matidocker990/bazaar-products-api:latest
         build:
             context: .
             dockerfile: Services/Products/Bazaar.Products.Service.Api/Dockerfile
@@ -114,7 +114,7 @@ services:
                 condition: service_healthy
 
     baskets_api:
-        image: baskets_api_image
+        image: matidocker990/bazaar-baskets-api:latest
         build:
             context: .
             dockerfile: Services/Baskets/Bazaar.Baskets.Service.Api/Dockerfile
@@ -134,7 +134,7 @@ services:
                 condition: service_healthy
 
     orders_api:
-        image: orders_api_image
+        image: matidocker990/bazaar-orders-api:latest
         build:
             context: .
             dockerfile: Services/Orders/Bazaar.Orders.Service.Api/Dockerfile
@@ -151,7 +151,7 @@ services:
                 condition: service_healthy
 
     api_gateway:
-        image: api_gateway_image
+        image: matidocker990/bazaar-api-gateway:latest
         build:
             context: .
             dockerfile: Gateway/Bazaar.Api.Gateway/Dockerfile
