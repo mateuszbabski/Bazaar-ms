@@ -14,7 +14,9 @@
   </Folder>
   <Folder Name="/Elementy rozwiązania/">
     <File Path=".env" />
+    <File Path=".github/workflows/ci.yml" />
     <File Path="docker-compose.yml" />
+    <File Path="installation.sh" />
   </Folder>
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />

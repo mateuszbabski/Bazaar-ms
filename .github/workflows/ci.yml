@@ -55,3 +55,37 @@ jobs:
         JWT_KEY: dummy
         SERVICE_JWT_KEY: dummy
       run: docker compose push
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker-build-push
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to Server
+      uses: appleboy/scp-action@v1
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_SSH_KEY }}
+        source: "docker-compose.yml,installation.sh,Database/"
+        target: "/app/bazaar"
+        
+    - name: Run installation on the Server
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_SSH_KEY }}
+        script: |
+          cd /app/bazaar
+          cat > .env << EOF
+          SA_PASSWORD=${{ secrets.SA_PASSWORD }}
+          JWT_KEY=${{ secrets.JWT_KEY }}
+          SERVICE_JWT_KEY=${{ secrets.SERVICE_JWT_KEY }}
+          EOF
+          chmod u+x installation.sh
+          source .env
+          docker compose pull
+          ./installation.sh "$SA_PASSWORD"
