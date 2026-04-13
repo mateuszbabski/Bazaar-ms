@@ -92,6 +92,7 @@ services:
             - "5001:8080"
         networks:
             - project_network
+        restart: always
         depends_on:
             customers_db:
                 condition: service_healthy
@@ -109,6 +110,7 @@ services:
             - "5002:8080"
         networks:
             - project_network
+        restart: always
         depends_on:
             products_db:
                 condition: service_healthy
@@ -129,6 +131,7 @@ services:
             - "5003:8080"
         networks:
             - project_network
+        restart: always
         depends_on:
             baskets_db:
                 condition: service_healthy
@@ -146,6 +149,7 @@ services:
             - "5004:8080"
         networks:
             - project_network
+        restart: always
         depends_on:
             orders_db:
                 condition: service_healthy
@@ -162,6 +166,7 @@ services:
             - Services__OrdersService=http://orders_api:8080
             - JwtSettings__Key=${JWT_KEY}
             - ServiceJwt__Key=${SERVICE_JWT_KEY}
+        restart: always
         ports:
             - "5000:8080"
         networks:
