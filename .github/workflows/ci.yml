@@ -55,3 +55,31 @@ jobs:
         JWT_KEY: dummy
         SERVICE_JWT_KEY: dummy
       run: docker compose push
+
+  deploy:
+    runs-on: self-hosted
+    needs: docker-build-push
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy
+      env:
+        SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
+        JWT_KEY: ${{ secrets.JWT_KEY }}
+        SERVICE_JWT_KEY: ${{ secrets.SERVICE_JWT_KEY }}
+      run: |
+        mkdir -p /app/bazaar
+        cp docker-compose.yml installation.sh /app/bazaar/
+        cp -r Database/ /app/bazaar/
+        cd /app/bazaar
+        cat > .env << EOF
+        SA_PASSWORD=${SA_PASSWORD}
+        JWT_KEY=${JWT_KEY}
+        SERVICE_JWT_KEY=${SERVICE_JWT_KEY}
+        EOF
+        chmod u+x installation.sh
+        source .env
+        docker compose pull
+        ./installation.sh "$SA_PASSWORD"
