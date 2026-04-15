@@ -3,6 +3,8 @@ using Bazaar.Orders.Service.DataAccess;
 using Bazaar.Orders.Service.Queries;
 using Bazaar.Shared.Infrastructure;
 using Bazaar.Shared.Infrastructure.Auth;
+using Prometheus;
+using Prometheus.DotNetRuntime;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,11 +31,21 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseHttpMetrics();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+DotNetRuntimeStatsBuilder
+    .Customize()
+    .WithGcStats()
+    .WithThreadPoolStats()
+    .WithExceptionStats()
+    .StartCollecting();
+
+app.MapMetrics();
 
 app.Run();

@@ -1,4 +1,61 @@
 services:
+    loki:
+        image: grafana/loki:3.7.0
+        volumes:
+            - ./loki-config.yaml:/etc/loki/loki-config.yaml:ro
+            - loki_data:/loki
+        command:
+            -config.file=/etc/loki/loki-config.yaml
+        ports:
+            - "3100:3100"
+        networks:
+            - project_network
+        restart: always
+        healthcheck:
+            test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1"]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 5s
+
+    grafana:
+        image: grafana/grafana:13.0.0
+        ports:
+            - "3000:3000"
+        networks:
+            - project_network
+        volumes:
+            - grafana-storage:/var/lib/grafana
+        restart: always
+        depends_on:
+            loki:
+                condition: service_healthy
+
+    promtail:
+        image: grafana/promtail:3.7.0
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml:ro
+        command:
+            -config.file=/etc/promtail/promtail-config.yaml
+        networks:
+            - project_network
+        restart: always
+        depends_on:
+            loki:
+                condition: service_healthy
+
+    prometheus:
+        image: prom/prometheus:3.5.2
+        volumes:
+            - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml:ro
+            - prometheus_data:/prometheus
+        ports:
+            - "9090:9090"
+        networks:
+            - project_network
+        restart: always
+
     customers_db:
         image: mcr.microsoft.com/mssql/server:2025-latest
         environment:
@@ -186,3 +243,6 @@ volumes:
     products_data:
     baskets_data:
     orders_data:
+    grafana-storage:
+    loki_data:
+    prometheus_data:

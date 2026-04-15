@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 20s
+  external_labels:
+    monitor: 'docker-monitor'
+
+scrape_configs:
+  - job_name: 'api_gateway'
+    static_configs:
+      - targets: ['api_gateway:8080']
+  - job_name: 'customers_api'
+    static_configs:
+      - targets: ['customers_api:8080']
+  - job_name: 'baskets_api'
+    static_configs:
+      - targets: ['baskets_api:8080']
+  - job_name: 'products_api'
+    static_configs:
+      - targets: ['products_api:8080']
+  - job_name: 'orders_api'
+    static_configs:
+      - targets: ['orders_api:8080']
