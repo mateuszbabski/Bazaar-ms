@@ -8,6 +8,14 @@ if [ -z "$SA_PASSWORD" ]; then
     exit 1
 fi
 
+# Ensure config files are files, not directories
+for config in loki-config.yaml promtail-config.yaml prometheus-config.yaml; do
+    if [ -d "$config" ]; then
+        echo "WARNING: $config is a directory, removing..."
+        rm -rf "$config"
+    fi
+done
+
 # Database services list with corresponding SQL script directories
 declare -a DB_SERVICES=("customers_db" "products_db" "baskets_db" "orders_db")
 
