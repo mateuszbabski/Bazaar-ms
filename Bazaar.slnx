@@ -1,22 +1,25 @@
 <Solution>
   <Folder Name="/Database/" />
   <Folder Name="/Database/Baskets/">
-    <File Path="001_init_baskets.sql" />
+    <File Path="Database/Baskets/001_init_baskets.sql" />
   </Folder>
   <Folder Name="/Database/Customers/">
     <File Path="Database/Customers/001_init_customers.sql" />
   </Folder>
   <Folder Name="/Database/Orders/">
-    <File Path="001_init_orders.sql" />
+    <File Path="Database/Orders/001_init_orders.sql" />
   </Folder>
   <Folder Name="/Database/Products/">
-    <File Path="001_init_products.sql" />
+    <File Path="Database/Products/001_init_products.sql" />
   </Folder>
   <Folder Name="/Elementy rozwiązania/">
     <File Path=".env" />
     <File Path=".github/workflows/ci.yml" />
     <File Path="docker-compose.yml" />
     <File Path="installation.sh" />
+    <File Path="loki-config.yaml" />
+    <File Path="prometheus-config.yaml" />
+    <File Path="promtail-config.yaml" />
   </Folder>
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Bazaar.Api.Gateway/Bazaar.Api.Gateway.csproj" />

@@ -1,8 +1,10 @@
+using Bazaar.Customers.Service.Commands;
+using Bazaar.Customers.Service.DataAccess;
+using Bazaar.Customers.Service.Queries;
 using Bazaar.Shared.Infrastructure;
 using Bazaar.Shared.Infrastructure.Auth;
-using Bazaar.Customers.Service.Commands;
-using Bazaar.Customers.Service.Queries;
-using Bazaar.Customers.Service.DataAccess;
+using Prometheus;
+using Prometheus.DotNetRuntime;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -31,11 +33,21 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseHttpMetrics();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+DotNetRuntimeStatsBuilder
+    .Customize()
+    .WithGcStats()
+    .WithThreadPoolStats()
+    .WithExceptionStats()
+    .StartCollecting();
+
+app.MapMetrics();
 
 app.Run();
