@@ -104,7 +104,6 @@ jobs:
         SERVICE_JWT_KEY: ${{ secrets.SERVICE_JWT_KEY }}
       run: |
         mkdir -p /app/bazaar
-        rm -rf /app/bazaar/loki-config.yaml /app/bazaar/promtail-config.yaml /app/bazaar/prometheus-config.yaml
         cp docker-compose.yml installation.sh /app/bazaar/
         cp loki-config.yaml promtail-config.yaml prometheus-config.yaml /app/bazaar/
         cp -r Database/ /app/bazaar/
