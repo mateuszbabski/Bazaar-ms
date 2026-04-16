@@ -26,7 +26,7 @@ echo ">>> Waiting for databases to be ready..."
 for service in "${DB_SERVICES[@]}"; do
     echo "  Waiting for $service..."
     attempt=1
-    max_attempts=30
+    max_attempts=60
     while [ $attempt -le $max_attempts ]; do
         container_id=$(docker compose ps -q "$service")
         status=$(docker inspect "$container_id" --format='{{.State.Health.Status}}' 2>/dev/null)
