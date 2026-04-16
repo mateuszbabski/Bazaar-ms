@@ -73,7 +73,7 @@ services:
             test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
             interval: 10s
             retries: 10
-            start_period: 30s
+            start_period: 60s
             timeout: 5s
 
     products_db:
@@ -93,7 +93,7 @@ services:
             test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
             interval: 10s
             retries: 10
-            start_period: 30s
+            start_period: 60s
             timeout: 5s
 
     baskets_db:
@@ -113,7 +113,7 @@ services:
             test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
             interval: 10s
             retries: 10
-            start_period: 30s
+            start_period: 60s
             timeout: 5s
 
     orders_db:
@@ -133,7 +133,7 @@ services:
             test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD}\" -Q 'SELECT 1' -C -b || exit 1"]
             interval: 10s
             retries: 10
-            start_period: 30s
+            start_period: 60s
             timeout: 5s
 
     customers_api:
