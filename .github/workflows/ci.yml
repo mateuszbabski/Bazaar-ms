@@ -105,6 +105,7 @@ jobs:
       run: |
         mkdir -p /app/bazaar
         cp docker-compose.yml installation.sh /app/bazaar/
+        cp loki-config.yaml promtail-config.yaml prometheus-config.yaml /app/bazaar/
         cp -r Database/ /app/bazaar/
         cd /app/bazaar
         cat > .env << EOF
