@@ -1,4 +1,4 @@
-services:
+﻿services:
     loki:
         image: grafana/loki:3.7.0
         volumes:
@@ -10,12 +10,6 @@ services:
         networks:
             - project_network
         restart: always
-        healthcheck:
-            test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1"]
-            interval: 10s
-            retries: 10
-            start_period: 60s
-            timeout: 5s
 
     grafana:
         image: grafana/grafana:13.0.0
@@ -27,8 +21,7 @@ services:
             - grafana-storage:/var/lib/grafana
         restart: always
         depends_on:
-            loki:
-                condition: service_healthy
+            - loki
 
     promtail:
         image: grafana/promtail:3.6.10
@@ -40,8 +33,7 @@ services:
             - project_network
         restart: always
         depends_on:
-            loki:
-                condition: service_healthy
+            - loki
 
     prometheus:
         image: prom/prometheus:v3.11.2
