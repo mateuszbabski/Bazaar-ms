@@ -4,8 +4,7 @@ services:
         volumes:
             - ./loki-config.yaml:/etc/loki/loki-config.yaml:ro
             - loki_data:/loki
-        command:
-            - config.file=/etc/loki/loki-config.yaml
+        command: "-config.file=/etc/loki/loki-config.yaml"
         ports:
             - "3100:3100"
         networks:
@@ -36,8 +35,7 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
             - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml:ro
-        command:
-            - config.file=/etc/promtail/promtail-config.yaml
+        command: "-config.file=/etc/promtail/promtail-config.yaml"
         networks:
             - project_network
         restart: always
