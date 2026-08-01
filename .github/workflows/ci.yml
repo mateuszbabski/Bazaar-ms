@@ -89,7 +89,7 @@ jobs:
       run: docker compose push
 
   deploy:
-    runs-on: self-hosted
+    runs-on: ['self-hosted', 'Linux', 'X64']
     needs: docker-build-push
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     environment: bazaar-env
